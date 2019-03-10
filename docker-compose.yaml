@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  postgres:
+    image: postgres
+    container_name: senzing-postgres
+    environment:
+      POSTGRES_DB:  ${POSTGRES_DB:-G2}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+    volumes:
+      - ${POSTGRES_STORAGE:-/storage/docker/senzing/docker-compose-postgresql-demo}:/var/lib/postgresql/data
+    restart: always
+
+networks:
+  backend:
