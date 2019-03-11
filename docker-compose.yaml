@@ -50,19 +50,5 @@ services:
       - "8443:443"
     restart: always
 
-  app:
-    image: senzing/python-demo
-    container_name: senzing-app
-    environment:
-      SENZING_DATABASE_URL: "postgresql://postgresql:${POSTGRES_PASSWORD:-postgres}@senzing-postgres:5432/${POSTGRES_DB:-G2}"
-      LC_CTYPE: en_US.utf8
-    networks:
-      - backend
-    ports:
-      - 5000:5000
-    volumes:
-      - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
-    restart: on-failure
-
 networks:
   backend:
