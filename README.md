@@ -8,9 +8,8 @@ The following diagram shows the relationship of the docker containers in this do
 
 This docker formation brings up the following docker containers:
 
-1. *[mysql](https://hub.docker.com/_/mysql)*
-1. *[phpmyadmin/phpmyadmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin)*
-1. *[senzing/mysql-init](https://github.com/Senzing/docker-mysql-init)*
+1. *[postgres](https://hub.docker.com/_/postgres)*
+1. *[dockage/phppgadmin](https://hub.docker.com/r/dockage/phppgadmin)*
 1. *[senzing/python-demo](https://github.com/Senzing/docker-python-demo)*
 
 Also shown in the demonstration are commands to run the following Docker images:
@@ -34,40 +33,24 @@ Also shown in the demonstration are commands to run the following Docker images:
     1. [Run G2Command.py](#run-g2commandpy)
 1. [Cleanup](#cleanup)
 
-### Shortcut
-
-The following is the full description of the demonstration.
-For a "short cut" version of the command, see
-[demo-shortcuts](doc/demo-shortcuts.md).
-
 ## Preparation
 
-### Set environment variables
+### Clone repository
 
-1. These variables may be modified, but do not need to be modified.
-   The variables are used throughout the installation procedure.
+1. Set these environment variable values:
 
     ```console
     export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=docker-compose-mysql-demo
+    export GIT_REPOSITORY=docker-compose-postgres-demo
     ```
 
-1. Synthesize environment variables.
+   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+
+1. After the repository has been cloned, be sure the following are set:
 
     ```console
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    export GIT_REPOSITORY_URL="https://github.com/${GIT_ACCOUNT}/${GIT_REPOSITORY}.git"
-    ```
-
-### Clone repository
-
-1. Get repository.
-
-    ```console
-    mkdir --parents ${GIT_ACCOUNT_DIR}
-    cd  ${GIT_ACCOUNT_DIR}
-    git clone ${GIT_REPOSITORY_URL}
     ```
 
 ### Create SENZING_DIR
@@ -105,9 +88,7 @@ The following software programs need to be installed.
 1. Build docker images.
 
     ```console
-    sudo docker build --tag senzing/python-base https://github.com/senzing/docker-python-base.git
-    sudo docker build --tag senzing/mysql       https://github.com/senzing/docker-mysql.git
-    sudo docker build --tag senzing/mysql-init  https://github.com/senzing/docker-mysql-init.git
+    sudo docker build --tag senzing/python-base https://github.com/senzing/docker-python-postgresql-base.git
     sudo docker build --tag senzing/python-demo https://github.com/senzing/docker-python-demo.git
     sudo docker build --tag senzing/g2loader    https://github.com/senzing/docker-g2loader.git
     sudo docker build --tag senzing/g2command   https://github.com/senzing/docker-g2command.git
@@ -122,18 +103,16 @@ The following software programs need to be installed.
   See [Create SENZING_DIR](#create-senzing_dir).
   No default.
   Usually set to "/opt/senzing".
-- **MYSQL_ROOT_PASSWORD** -
-  The password for the the database "root" user name.
-  Default: "root"
-- **MYSQL_STORAGE** -
+- **POSTGRES_DB** -
+  The database to create upon first invocation. Default: "G2".
+- **POSTGRES_PASSWORD** -
+  The password for the the database "postgres" user name.
+  Default: "postgres"
+- **POSTGRES_STORAGE** -
   Path on local system where the database files are stored.
-  Default: "/storage/docker/senzing/docker-compose-mysql-demo"
-- **MYSQL_xxxx** - See [github.com/Senzing/docker-mysql](https://github.com/Senzing/docker-mysql)
-  for more details on how to find values for other **MYSQL_** environment variables.
+  Default: "/storage/docker/senzing/docker-compose-postgresql-demo"
 
 ### Launch docker formation
-
-#### Variation 1
 
 1. Launch docker-compose formation.  Example:
 
@@ -141,52 +120,22 @@ The following software programs need to be installed.
     cd ${GIT_REPOSITORY_DIR}
 
     export SENZING_DIR=/opt/senzing
-    export MYSQL_HOST=senzing-mysql
-    export MYSQL_DATABASE=G2
-    export MYSQL_ROOT_PASSWORD=root
-    export MYSQL_USERNAME=g2
-    export MYSQL_PASSWORD=g2
-    export MYSQL_STORAGE=/storage/docker/senzing/docker-compose-mysql-demo
+    export POSTGRES_DB=G2
+    export POSTGRES_PASSWORD=postgres
+    export POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-postgresql-demo
 
     sudo docker-compose up
     ```
 
-#### Variation 2
+### Initialize database
 
-1. Launch docker-compose formation with "diskless mysql".
-   In this docker formation, the mysql docker container does not externalize `/var/lib/mysql`.
-   This is done by using docker's `--tmpfs` parameter rather than its `--volume` parameter.
-   Example:
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-
-    export SENZING_DIR=/opt/senzing
-    export MYSQL_HOST=senzing-mysql
-    export MYSQL_DATABASE=G2
-    export MYSQL_ROOT_PASSWORD=root
-    export MYSQL_USERNAME=g2
-    export MYSQL_PASSWORD=g2
-
-    sudo docker-compose -f docker-compose-diskless-mysql.yaml up
-    ```
-
-### Test docker formation
-
-1. In the docker-compose log, wait for the following log record:
-
-    ```console
-    senzing-mysql-init exited with code 0
-    ```
-
-    There will be errors, due to docker container dependencies,
-    shown in the docker-compose log until that log record is published.
-
-1. Once docker formation is up, phpMyAdmin will be available at
-   [localhost:8080](http://localhost:8080). Login with values specified for `MYSQL_USERNAME` and `MYSQL_PASSWORD`.
-1. In Variation #1, the database storage will be on the local system at ${MYSQL_STORAGE}.
-   The default database storage path is `/storage/docker/senzing/docker-compose-mysql-demo`.
-1. After the schema is loaded, the demonstration python/Flask app will be available at
+1. The database will be initialized using phpPgAdmin at [localhost:8080](http://localhost:8080).
+   Login to phpPgAdmin with Username: postgres and Password: value of `POSTGRES_PASSWORD`.
+1. In the left-hand navigation, highlight "G2" database.
+1. Click "SQL" tab.
+1. Click "Browse..." button and locate `/opt/senzing/g2/data/g2core-schema-postgresql-create.sql`
+1. Click "Execute" button.
+1. TODO: After the schema is loaded, the demonstration python/Flask app will be available at
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
@@ -205,11 +154,11 @@ In a separate terminal window:
 1. Run `docker` command. Example:
 
     ```console
-    export DATABASE_PROTOCOL=mysql
-    export DATABASE_USERNAME=g2
-    export DATABASE_PASSWORD=g2
-    export DATABASE_HOST=senzing-mysql
-    export DATABASE_PORT=3306
+    export DATABASE_PROTOCOL=postgresql
+    export DATABASE_USERNAME=postgres
+    export DATABASE_PASSWORD=postgres
+    export DATABASE_HOST=senzing-postgresql
+    export DATABASE_PORT=5432
     export DATABASE_DATABASE=G2
 
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
@@ -271,7 +220,7 @@ In a separate terminal window:
 1. Delete database storage.
 
     ```console
-    sudo rm -rf ${MYSQL_STORAGE}
+    sudo rm -rf ${POSTGRES_STORAGE}
     ```
 
 1. Delete SENZING_DIR.
