@@ -88,8 +88,14 @@ The following software programs need to be installed.
 1. Build docker images.
 
     ```console
-    sudo docker build --tag senzing/python-base https://github.com/senzing/docker-python-postgresql-base.git
-    sudo docker build --tag senzing/python-demo https://github.com/senzing/docker-python-demo.git
+    sudo docker build \
+      --tag senzing/python-postgresql-base \
+      https://github.com/senzing/docker-python-postgresql-base.git
+      
+    sudo docker build \
+      --tag senzing/python-postgres-demo \
+      https://github.com/senzing/docker-python-demo.git
+      
     sudo docker build --tag senzing/g2loader    https://github.com/senzing/docker-g2loader.git
     sudo docker build --tag senzing/g2command   https://github.com/senzing/docker-g2command.git
     ```
