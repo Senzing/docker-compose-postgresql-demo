@@ -132,13 +132,6 @@ The following software programs need to be installed.
 
 ### Configuration
 
-- **SENZING_DIR** -
-  Path on the local system where
-  [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
-  has been extracted.
-  See [Create SENZING_DIR](#create-senzing_dir).
-  No default.
-  Usually set to "/opt/senzing".
 - **POSTGRES_DB** -
   The database to create upon first invocation. Default: "G2".
 - **POSTGRES_PASSWORD** -
@@ -147,6 +140,13 @@ The following software programs need to be installed.
 - **POSTGRES_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-postgresql-demo"
+- **SENZING_DIR** -
+  Path on the local system where
+  [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
+  has been extracted.
+  See [Create SENZING_DIR](#create-senzing_dir).
+  No default.
+  Usually set to "/opt/senzing".
 
 ### Launch docker formation
 
@@ -155,10 +155,10 @@ The following software programs need to be installed.
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export SENZING_DIR=/opt/senzing
     export POSTGRES_DB=G2
     export POSTGRES_PASSWORD=postgres
     export POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-postgresql-demo
+    export SENZING_DIR=/opt/senzing
 
     sudo docker-compose up
     ```
@@ -177,6 +177,9 @@ The following software programs need to be installed.
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
+
+For more information on `senzing/g2loader` configuration and usage, see
+[senzing/docker-g2loader](https://github.com/Senzing/docker-g2loader).
 
 In a separate terminal window:
 
@@ -215,6 +218,9 @@ In a separate terminal window:
     ```
 
 ### Run G2Command.py
+
+For more information on `senzing/g2command` configuration and usage, see
+[senzing/docker-g2command](https://github.com/Senzing/docker-g2command).
 
 In a separate terminal window:
 
