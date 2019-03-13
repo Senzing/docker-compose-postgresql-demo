@@ -168,7 +168,7 @@ The following software programs need to be installed.
 ### Initialize database
 
 1. The database will be initialized using phpPgAdmin at [localhost:8080](http://localhost:8080).
-   Login to phpPgAdmin with Username: postgres and Password: value of `POSTGRES_PASSWORD`.
+1. Login to phpPgAdmin with Username: postgres and Password: value of `POSTGRES_PASSWORD`.
 1. In the left-hand navigation, highlight "G2" database.
 1. Click "SQL" tab.
 1. Click "Browse..." button and locate `/opt/senzing/g2/data/g2core-schema-postgresql-create.sql`
