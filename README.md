@@ -20,7 +20,6 @@ Also shown in the demonstration are commands to run the following Docker images:
 ### Contents
 
 1. [Preparation](#preparation)
-    1. [Set environment variables](#set-environment-variables)
     1. [Clone repository](#clone-repository)
     1. [Create SENZING_DIR](#create-senzing_dir)
     1. [Prerequisite Software](#prerequisite-software)
@@ -28,7 +27,7 @@ Also shown in the demonstration are commands to run the following Docker images:
     1. [Build docker images](#build-docker-images)
     1. [Configuration](#configuration)
     1. [Launch docker formation](#launch-docker-formation)
-    1. [Test docker formation](#test-docker-formation)
+    1. [Initialize database](#initialize-database)
     1. [Run G2Loader.py](#run-g2loaderpy)
     1. [Run G2Command.py](#run-g2commandpy)
 1. [Cleanup](#cleanup)
@@ -142,6 +141,8 @@ The following software programs need to be installed.
 
     sudo docker-compose up
     ```
+    
+    **Note:** `senzing-app` errors will be seen in the log until the database has been initialized in the next step.
 
 ### Initialize database
 
@@ -173,7 +174,7 @@ In a separate terminal window:
     export DATABASE_PROTOCOL=postgresql
     export DATABASE_USERNAME=postgres
     export DATABASE_PASSWORD=postgres
-    export DATABASE_HOST=senzing-postgresql
+    export DATABASE_HOST=senzing-postgres
     export DATABASE_PORT=5432
     export DATABASE_DATABASE=G2
 
@@ -205,11 +206,11 @@ In a separate terminal window:
 1. Run `docker` command. Example:
 
     ```console
-    export DATABASE_PROTOCOL=mysql
-    export DATABASE_USERNAME=root
-    export DATABASE_PASSWORD=root
-    export DATABASE_HOST=senzing-mysql
-    export DATABASE_PORT=3306
+    export DATABASE_PROTOCOL=postgresql
+    export DATABASE_USERNAME=postgres
+    export DATABASE_PASSWORD=postgres
+    export DATABASE_HOST=senzing-postgres
+    export DATABASE_PORT=5432
     export DATABASE_DATABASE=G2
 
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
