@@ -4,7 +4,7 @@
 
 The following diagram shows the relationship of the docker containers in this docker composition.
 
-![Image of architecture](doc/img-architecture/architecture.png)
+![Image of architecture](docs/img-architecture/architecture.png)
 
 This docker formation brings up the following docker containers:
 
