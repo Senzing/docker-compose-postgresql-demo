@@ -19,6 +19,10 @@ Also shown in the demonstration are commands to run the following Docker images:
 
 ### Contents
 
+1. [Expectations](#expectations)
+    1. [Space](#space)
+    1. [Time](#time)
+    1. [Background knowledge](#background-knowledge)
 1. [Preparation](#preparation)
     1. [Clone repository](#clone-repository)
     1. [Create SENZING_DIR](#create-senzing_dir)
@@ -32,6 +36,23 @@ Also shown in the demonstration are commands to run the following Docker images:
     1. [Run G2Command.py](#run-g2commandpy)
 1. [Cleanup](#cleanup)
 
+## Expectations
+
+### Space
+
+This repository and demonstration require 6 GB free disk space.
+
+### Time
+
+Budget 2 hours to get the demonstration up-and-running, depending on CPU and network speeds.
+
+### Background knowledge
+
+This repository assumes a working knowledge of:
+
+1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+1. [Docker-Compose](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker-compose.md)
+
 ## Preparation
 
 ### Clone repository
@@ -40,7 +61,7 @@ Also shown in the demonstration are commands to run the following Docker images:
 
     ```console
     export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=docker-compose-postgres-demo
+    export GIT_REPOSITORY=docker-compose-postgresql-demo
     ```
 
    Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
@@ -111,13 +132,6 @@ The following software programs need to be installed.
 
 ### Configuration
 
-- **SENZING_DIR** -
-  Path on the local system where
-  [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
-  has been extracted.
-  See [Create SENZING_DIR](#create-senzing_dir).
-  No default.
-  Usually set to "/opt/senzing".
 - **POSTGRES_DB** -
   The database to create upon first invocation. Default: "G2".
 - **POSTGRES_PASSWORD** -
@@ -126,6 +140,13 @@ The following software programs need to be installed.
 - **POSTGRES_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-postgresql-demo"
+- **SENZING_DIR** -
+  Path on the local system where
+  [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
+  has been extracted.
+  See [Create SENZING_DIR](#create-senzing_dir).
+  No default.
+  Usually set to "/opt/senzing".
 
 ### Launch docker formation
 
@@ -134,20 +155,20 @@ The following software programs need to be installed.
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export SENZING_DIR=/opt/senzing
     export POSTGRES_DB=G2
     export POSTGRES_PASSWORD=postgres
     export POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-postgresql-demo
+    export SENZING_DIR=/opt/senzing
 
     sudo docker-compose up
     ```
 
-    **Note:** `senzing-app` errors will be seen in the log until the database has been initialized in the next step.
+    **Note:** The log will show errors from `senzing-app` until the database has been initialized in the next step.
 
 ### Initialize database
 
 1. The database will be initialized using phpPgAdmin at [localhost:8080](http://localhost:8080).
-   Login to phpPgAdmin with Username: postgres and Password: value of `POSTGRES_PASSWORD`.
+1. Login to phpPgAdmin with Username: postgres and Password: value of `POSTGRES_PASSWORD`.
 1. In the left-hand navigation, highlight "G2" database.
 1. Click "SQL" tab.
 1. Click "Browse..." button and locate `/opt/senzing/g2/data/g2core-schema-postgresql-create.sql`
@@ -156,6 +177,9 @@ The following software programs need to be installed.
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
+
+For more information on `senzing/g2loader` configuration and usage, see
+[senzing/docker-g2loader](https://github.com/Senzing/docker-g2loader).
 
 In a separate terminal window:
 
@@ -194,6 +218,9 @@ In a separate terminal window:
     ```
 
 ### Run G2Command.py
+
+For more information on `senzing/g2command` configuration and usage, see
+[senzing/docker-g2command](https://github.com/Senzing/docker-g2command).
 
 In a separate terminal window:
 
