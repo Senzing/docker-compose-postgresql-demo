@@ -163,7 +163,7 @@ The following software programs need to be installed.
     sudo docker-compose up
     ```
 
-    **Note:** `senzing-app` errors will be seen in the log until the database has been initialized in the next step.
+    **Note:** The log will show errors from `senzing-app` until the database has been initialized in the next step.
 
 ### Initialize database
 
