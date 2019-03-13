@@ -141,7 +141,7 @@ The following software programs need to be installed.
 
     sudo docker-compose up
     ```
-    
+
     **Note:** `senzing-app` errors will be seen in the log until the database has been initialized in the next step.
 
 ### Initialize database
@@ -181,10 +181,13 @@ In a separate terminal window:
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
     export SENZING_DIR=/opt/senzing
 
-    sudo docker run -it  \
-      --volume ${SENZING_DIR}:/opt/senzing \
-      --net ${SENZING_NETWORK} \
+    sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --interactive \
+      --net ${SENZING_NETWORK} \
+      --rm \
+      --tty \
+      --volume ${SENZING_DIR}:/opt/senzing \
       senzing/g2loader \
         --purgeFirst \
         --projectFile /opt/senzing/g2/python/demo/sample/project.csv
@@ -216,10 +219,13 @@ In a separate terminal window:
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
     export SENZING_DIR=/opt/senzing
 
-    sudo docker run -it  \
-      --volume ${SENZING_DIR}:/opt/senzing \
-      --net ${SENZING_NETWORK} \
+    sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --interactive \
+      --net ${SENZING_NETWORK} \
+      --rm \
+      --tty \
+      --volume ${SENZING_DIR}:/opt/senzing \
       senzing/g2command
     ```
 
