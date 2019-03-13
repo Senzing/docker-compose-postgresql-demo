@@ -152,7 +152,7 @@ The following software programs need to be installed.
 1. Click "SQL" tab.
 1. Click "Browse..." button and locate `/opt/senzing/g2/data/g2core-schema-postgresql-create.sql`
 1. Click "Execute" button.
-1. TODO: After the schema is loaded, the demonstration python/Flask app will be available at
+1. After the schema is loaded, the demonstration python/Flask app will be available at
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
