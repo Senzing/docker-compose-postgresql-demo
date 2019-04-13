@@ -1,4 +1,4 @@
-# docker-compose-diskless-postgresql-demo 
+# docker-compose-diskless-postgresql-demo
 
 ## Overview
 
@@ -86,14 +86,13 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Configuration
 
+- **OUTPUT_DIR** -
+  The directory on the local workstation that receives output from the `senzing-playground` docker container.
 - **POSTGRES_DB** -
   The database to create upon first invocation. Default: "G2".
 - **POSTGRES_PASSWORD** -
   The password for the the database "postgres" user name.
   Default: "postgres"
-- **POSTGRES_STORAGE** -
-  Path on local system where the database files are stored.
-  Default: "/storage/docker/senzing/docker-compose-postgresql-demo"
 - **SENZING_DIR** -
   Path on the local system where
   [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
@@ -109,12 +108,12 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export OUTPUT_DIR=/tmp
-    export POSTGRES_DB=G2
-    export POSTGRES_PASSWORD=postgres
-    export SENZING_DIR=/opt/senzing
-
-    sudo docker-compose --file docker-compose-diskless-postgresql.yaml up
+    sudo \
+      OUTPUT_DIR=/tmp/mjd \
+      POSTGRES_DB=G2 \
+      POSTGRES_PASSWORD=postgres \
+      SENZING_DIR=/opt/senzing \
+      docker-compose --file docker-compose-diskless-postgresql.yaml up
     ```
 
 ### Initialize database
@@ -133,7 +132,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     ```console
     export PGUSER=postgres
     export PGPASSWORD=postgres
-    
+
     psql \
       --dbname=G2 \
       --echo-all \
@@ -152,7 +151,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
     ```console
     cd /opt/senzing/g2/python
-    
+
     python G2Loader.py --purgeFirst --projectFile /opt/senzing/g2/python/demo/sample/project.csv
     ```
 
@@ -162,19 +161,19 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
     ```console
     cd /opt/senzing/g2/python
-    
+
     python G2Command.py
     ```
 
 ### Output
 
-1. In the `senzing-playground` docker container, run the `G2Command.py` command. Example:
+1. In the `senzing-playground` docker container, create output. Example:
 
     ```console
     echo "Made inside the senzing-playground docker container." > /output/from-senzing-playground.txt
     ```
 
-1. On local workstation, the file is at ${OUTPUT_DIR}/from-senzing-playground.txt
+1. The file will be on the docker host (i.e. not in the docker container) at ${OUTPUT_DIR}/from-senzing-playground.txt
 
 ## Cleanup
 
@@ -184,7 +183,7 @@ In a separate terminal window:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker-compose down
+    sudo docker-compose --file docker-compose-diskless-postgresql.yaml down
     ```
 
 1. Delete SENZING_DIR.
