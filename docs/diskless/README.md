@@ -10,7 +10,7 @@ This docker formation brings up the following docker containers:
 
 1. *[postgres](https://hub.docker.com/_/postgres)*
 1. *[dockage/phppgadmin](https://hub.docker.com/r/dockage/phppgadmin)*
-1. *[senzing/senzing-base](https://github.com/Senzing/senzing-base)*
+1. *[senzing/senzing-base](https://github.com/Senzing/docker-senzing-base)*
 
 ### Contents
 
@@ -109,7 +109,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     cd ${GIT_REPOSITORY_DIR}
 
     sudo \
-      OUTPUT_DIR=/tmp/mjd \
+      OUTPUT_DIR=/tmp \
       POSTGRES_DB=G2 \
       POSTGRES_PASSWORD=postgres \
       SENZING_DIR=/opt/senzing \
