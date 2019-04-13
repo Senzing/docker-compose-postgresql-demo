@@ -152,7 +152,9 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     ```console
     cd /opt/senzing/g2/python
 
-    python G2Loader.py --purgeFirst --projectFile /opt/senzing/g2/python/demo/sample/project.csv
+    python G2Loader.py \
+      --purgeFirst \
+      --projectFile /opt/senzing/g2/python/demo/sample/project.csv
     ```
 
 ### Run G2Command.py
