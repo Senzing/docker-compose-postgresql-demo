@@ -142,7 +142,11 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 1. Click "SQL" tab.
 1. Click "Browse..." button and locate `/opt/senzing/g2/data/g2core-schema-postgresql-create.sql`
 1. Click "Execute" button.
-1. After the schema is loaded, the demonstration python/Flask app will be available at
+
+### Sample python app
+
+1. After the schema and data are loaded,
+   the demonstration python/Flask app will be available at
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
