@@ -32,6 +32,7 @@ Also shown in the demonstration are commands to run the following Docker images:
     1. [Configuration](#configuration)
     1. [Launch docker formation](#launch-docker-formation)
     1. [Initialize database](#initialize-database)
+    1. [Sample python app](#sample-python-app)
     1. [Run G2Loader.py](#run-g2loaderpy)
     1. [Run G2Command.py](#run-g2commandpy)
 1. [Cleanup](#cleanup)
@@ -71,7 +72,7 @@ The following software programs need to be installed:
     export GIT_REPOSITORY=docker-compose-postgresql-demo
     ```
 
-   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 1. After the repository has been cloned, be sure the following are set:
 
@@ -86,18 +87,6 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
 ## Using docker-compose
-
-### Build docker images
-
-1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
-
-1. Build docker images.
-
-    ```console
-    sudo docker build --tag senzing/python-demo  https://github.com/senzing/docker-python-demo.git
-    sudo docker build --tag senzing/g2loader     https://github.com/senzing/docker-g2loader.git
-    sudo docker build --tag senzing/g2command    https://github.com/senzing/docker-g2command.git
-    ```
 
 ### Configuration
 
@@ -119,17 +108,28 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Launch docker formation
 
+#### Variation 1
+
+1. :pencil2: Set environment variables.  Example:
+
+    ```console
+    export POSTGRES_DB=G2
+    export POSTGRES_PASSWORD=postgres
+    export POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-postgresql-demo
+    export SENZING_DIR=/opt/senzing
+    ```
+
 1. Launch docker-compose formation.  Example:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export POSTGRES_DB=G2
-    export POSTGRES_PASSWORD=postgres
-    export POSTGRES_STORAGE=/storage/docker/senzing/docker-compose-postgresql-demo
-    export SENZING_DIR=/opt/senzing
-
-    sudo docker-compose up
+    sudo \
+      POSTGRES_DB=${POSTGRES_DB} \
+      POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+      POSTGRES_STORAGE=${POSTGRES_STORAGE} \
+      SENZING_DIR=${SENZING_DIR} \
+      docker-compose up
     ```
 
     **Note:** The log will show errors from `senzing-app` until the database has been initialized in the next step.
@@ -142,7 +142,13 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 1. Click "SQL" tab.
 1. Click "Browse..." button and locate `/opt/senzing/g2/data/g2core-schema-postgresql-create.sql`
 1. Click "Execute" button.
-1. After the schema is loaded, the demonstration python/Flask app will be available at
+
+### Sample python app
+
+1. After the schema and data are loaded,
+   the demonstration
+   [python/Flask](https://github.com/Senzing/docker-python-demo)
+   app will be available at
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
@@ -152,7 +158,7 @@ For more information on `senzing/g2loader` configuration and usage, see
 
 In a separate terminal window:
 
-1. Determine docker network. Example:
+1. :pencil2: Determine docker network. Example:
 
     ```console
     sudo docker network ls
@@ -161,18 +167,22 @@ In a separate terminal window:
     export SENZING_NETWORK=nameofthe_network
     ```
 
+1. :pencil2: Set environment variables.  Example:
+
+    ```console
+    export DATABASE_DATABASE=G2
+    export DATABASE_PASSWORD=postgres
+    export SENZING_DIR=/opt/senzing
+    ```
+
 1. Run `docker` command. Example:
 
     ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
     export DATABASE_HOST=senzing-postgres
     export DATABASE_PORT=5432
-    export DATABASE_DATABASE=G2
-
+    export DATABASE_PROTOCOL=postgresql
+    export DATABASE_USERNAME=postgres
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
-    export SENZING_DIR=/opt/senzing
 
     sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
@@ -193,7 +203,7 @@ For more information on `senzing/g2command` configuration and usage, see
 
 In a separate terminal window:
 
-1. Determine docker network. Example:
+1. :pencil2: Determine docker network. Example:
 
     ```console
     sudo docker network ls
@@ -202,18 +212,22 @@ In a separate terminal window:
     export SENZING_NETWORK=nameofthe_network
     ```
 
+1. :pencil2: Set environment variables.  Example:
+
+    ```console
+    export DATABASE_DATABASE=G2
+    export DATABASE_PASSWORD=postgres
+    export SENZING_DIR=/opt/senzing
+    ```
+
 1. Run `docker` command. Example:
 
     ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
     export DATABASE_HOST=senzing-postgres
     export DATABASE_PORT=5432
-    export DATABASE_DATABASE=G2
-
+    export DATABASE_PROTOCOL=postgresql
+    export DATABASE_USERNAME=postgres
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
-    export SENZING_DIR=/opt/senzing
 
     sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
