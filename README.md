@@ -146,7 +146,9 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 ### Sample python app
 
 1. After the schema and data are loaded,
-   the demonstration python/Flask app will be available at
+   the demonstration
+   [python/Flask](https://github.com/Senzing/docker-python-demo)
+   app will be available at
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
