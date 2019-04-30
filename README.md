@@ -90,15 +90,15 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Configuration
 
-- **POSTGRES_DB** -
+* **POSTGRES_DB** -
   The database to create upon first invocation. Default: "G2".
-- **POSTGRES_PASSWORD** -
+* **POSTGRES_PASSWORD** -
   The password for the the database "postgres" user name.
   Default: "postgres"
-- **POSTGRES_STORAGE** -
+* **POSTGRES_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-postgresql-demo"
-- **SENZING_DIR** -
+* **SENZING_DIR** -
   Path on the local system where
   [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
   has been extracted.
