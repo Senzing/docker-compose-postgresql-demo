@@ -1,5 +1,7 @@
 # docker-compose-postgresql-demo
 
+## :no_entry: Deprecated
+
 ## Overview
 
 The following diagram shows the relationship of the docker containers in this docker composition.
