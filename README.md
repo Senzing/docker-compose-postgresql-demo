@@ -4,8 +4,11 @@
 
 This repository was an early example of a docker-compose formation
 using Senzing with dockerized Python scripts.
-It has been improved upon at
-[github.com/Senzing/docker-compose-demo](https://github.com/Senzing/docker-compose-demo).
+It is deprecated and will not be maintained.
+
+It has been replaced by
+[github.com/Senzing/docker-compose-demo](https://github.com/Senzing/docker-compose-demo)
+which shows docker-compose formations for multiple databases.
 
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
