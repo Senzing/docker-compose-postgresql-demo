@@ -2,6 +2,13 @@
 
 ## :no_entry: Deprecated
 
+This repository was an early example of a docker-compose formation
+using Senzing with dockerized Python scripts.
+It has been improved upon at
+[github.com/Senzing/docker-compose-demo](https://github.com/Senzing/docker-compose-demo).
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 ## Overview
 
 The following diagram shows the relationship of the docker containers in this docker composition.
